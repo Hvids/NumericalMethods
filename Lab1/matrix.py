@@ -129,7 +129,7 @@ def get_mareixC(matrix):
         C.append(row)
     return C
 
-def get_matrixE(n):
+def get_matrix_eye(n):
     result = []
     for i in range(n):
         row = [0]*n

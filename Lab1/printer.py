@@ -12,4 +12,14 @@ def print_roots(roots):
 
 def print_vector(vector):
     for value in vector:
-        print(value)
+        print(f'\t{value}')
+
+def print_eigvals(eigvals):
+    for i,eigval in enumerate(eigvals):
+        print(f'a_{i+1} = {eigval}',end='; ')
+    print('')
+
+def print_eigvectors(eigvectors):
+    for i,eigvec in enumerate(eigvectors):
+        print(f'x{i+1}:')
+        print_vector(eigvec)
