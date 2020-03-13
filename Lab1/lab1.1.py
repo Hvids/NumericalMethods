@@ -1,6 +1,6 @@
 from matrix import *
 from printer import  *
-from methodLUP import  solve_LUP
+from methodLUP import  solve_LUP, LUP_Decomposition, devide_LU,calc_inv_LU
 import  numpy as np
 matrix = [
     [1, 2, -2, 6],
@@ -11,6 +11,10 @@ matrix = [
 b = [24, 41, 0, 20]
 roots_lup = solve_LUP(matrix, b)
 roots_np = np.linalg.solve(matrix, b)
+LU, p = LUP_Decomposition(matrix)
+L, U = devide_LU(LU)
+inv_m = calc_inv_LU(LU,p)
+
 print('Lab1.1')
 print('Матрица:')
 print_matrix(matrix)
@@ -24,13 +28,10 @@ print('Определитель матрцы')
 det = calc_determinant(matrix)
 print(det)
 print('Обратная матрица:')
-
-matrix_inf = calc_inv_matrix(matrix)
-print_matrix(matrix_inf)
-
-# print("Корни при помощи numpy")
-# print_roots(roots_np)
-# print('Оперделитель при помощи numpy')
-# print(np.linalg.det(matrix))
-# print('Обратная матрица при помощи numpy')
-# print_matrix(np.linalg.inv(matrix))
+print_matrix(inv_m)
+print("Корни при помощи numpy")
+print_roots(roots_np)
+print('Оперделитель при помощи numpy')
+print(np.linalg.det(matrix))
+print('Обратная матрица при помощи numpy')
+print_matrix(np.linalg.inv(matrix))

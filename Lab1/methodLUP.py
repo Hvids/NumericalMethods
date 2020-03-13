@@ -1,8 +1,9 @@
 from copy import copy, deepcopy
-from matrix import  swap_vector
-
+from matrix import  swap_vector, get_matrix_eye, transporate
+from printer import  print_matrix
 
 def LUP_Decomposition(A):
+    A = deepcopy(A)
     A = copy(A)
     n = len(A)
     p = [i for i in range(n)]
@@ -52,3 +53,26 @@ def solve_LUP(A, B):
     X = list(map(lambda x: round(x,8), X))
     return copy(X)
 
+
+def devide_LU(A):
+    A = deepcopy(A)
+    L = [[0 for i in range(len(A[0]))] for j in range(len(A))]
+    U = [[0 for i in range(len(A[0]))] for j in range(len(A))]
+    for i in range(len(A)):
+        L[i][i] =1
+        for j in range(len(A)):
+            if i > j:
+                L[i][j] = A[i][j]
+            elif i <= j:
+                U[i][j] = A[i][j]
+    return L, U
+
+def calc_inv_LU(LU, p):
+    n = len(LU)
+    E = get_matrix_eye(n)
+
+    res = []
+    for i in range(n):
+        res.append(LUP_solve(LU,p,E[i]))
+    inv_m = transporate(res)
+    return inv_m

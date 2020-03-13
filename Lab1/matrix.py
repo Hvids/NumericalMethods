@@ -217,3 +217,4 @@ def calc_diff_vector(rhs, lhs):
     for i in range(len(rhs)):
         result[i] += rhs[i] - lhs[i]
     return result
+
