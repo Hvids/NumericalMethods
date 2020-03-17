@@ -1,4 +1,4 @@
-from math import atan, sin, cos
+from math import atan, sin, cos, pi
 from matrix import *
 from copy import deepcopy
 
@@ -12,6 +12,13 @@ def get_index_max_abs_elem(matrix):
                 l = i
                 m = j
     return l,m
+def calc_phi(A, l, m):
+    if A[l][l] == A[m][m]:
+        return pi/4
+    else:
+        return 0.5*atan(2*A[l][m]/(A[l][l] - A[m][m]))
+
+
 def calc_t(matrix):
     sum_t = 0
     for i in range(len(matrix)):
@@ -29,7 +36,7 @@ def get_eigval_eigvec_method_jacobi(matrix,precision):
     while True:
         k+=1
         l,m = get_index_max_abs_elem(A_k)
-        phi = 0.5*atan(2*A_k[l][m]/(A_k[l][l] - A_k[m][m]))
+        phi = calc_phi(A_k,l,m)
         U = get_matrix_eye(n)
         U[l][m] = -sin(phi)
         U[m][l] = sin(phi)
