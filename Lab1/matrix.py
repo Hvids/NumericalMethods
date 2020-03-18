@@ -218,3 +218,30 @@ def calc_diff_vector(rhs, lhs):
         result[i] += rhs[i] - lhs[i]
     return result
 
+def calc_norm_row(matrix, row):
+    sum_row = 0
+    for i in range(row,len(matrix)):
+        sum_row += matrix[i][row]**2
+    sum_row = sum_row**0.5
+    return sum_row
+
+def calc_norm_row_d1(matrix, row):
+    sum_row = 0
+    for i in range(row+1,len(matrix)):
+        sum_row += matrix[i][row]**2
+    sum_row = sum_row**0.5
+    return sum_row
+
+def calc_norm_row_d2(matrix, row):
+    sum_row = 0
+    for i in range(row+2,len(matrix)):
+        sum_row += matrix[i][row]**2
+    sum_row = sum_row**0.5
+    return sum_row
+
+def calc_mult_val_matrix(val,matrix):
+    matrix = copy.deepcopy(matrix)
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            matrix[i][j] *= val
+    return matrix

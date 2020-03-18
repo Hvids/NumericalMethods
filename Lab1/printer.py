@@ -16,7 +16,7 @@ def print_vector(vector):
 
 def print_eigvals(eigvals):
     for i,eigval in enumerate(eigvals):
-        print(f'a_{i+1} = {eigval}',end='; ')
+        print(f'eigen_{i+1} = {eigval}',end='; ')
     print('')
 
 def print_eigvectors(eigvectors):
