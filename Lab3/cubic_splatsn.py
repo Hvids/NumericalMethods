@@ -1,3 +1,6 @@
+import  sys
+sys.path.append('../Lab1/')
+
 import sympy
 import numpy as np
 from sympy import pi

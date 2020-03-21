@@ -2,7 +2,10 @@ from copy import deepcopy
 from matrix import *
 
 def sign(a):
+    if a == 0:
+        return 0
     return a/abs(a)
+
 
 def get_decomposition_qr(matrix):
     n  = len(matrix)
