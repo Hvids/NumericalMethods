@@ -49,3 +49,4 @@ def get_eigval_qr(A, eps):
             i += 1
         A_i = eigenval[2]
     return res
+

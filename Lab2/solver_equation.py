@@ -6,7 +6,8 @@ def solve_eq_simple_iteration(phi, xstart, q,eps):
     while True:
         k += 1
         xk_1 = phi.subs(x,xstart).evalf()
-        if q/(1-q)*abs(xstart- xk_1) < eps:
+        eps_s = q/(1-q)*abs(xstart- xk_1) if not q==1 else abs(xstart- xk_1) 
+        if eps_s< eps:
             xstart = xk_1
             break
         else:

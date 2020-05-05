@@ -112,8 +112,19 @@ class SimpleIteration:
             
             xnext = list( map(lambda p: p.subs(xk), self.phi))
             
-            epsk = q*calc_eps_root(xstart,xnext)/(1-q)
+            epsk = q*calc_eps_root(xstart,xnext)/(1-q) if not q == 1 else  calc_eps_root(xstart,xnext)
             xstart = xnext
             if epsk < eps:
                 break
         return xstart, k
+
+
+if __name__ == '__main__':
+    x_vector = sympy.symbols('x:2')
+    f_vector = [
+        0.1*x_vector[0]**2  + x_vector[0] + 0.2*x_vector[1]**2 -0.3,
+        0.2*x_vector[0]**2 + x_vector[1] - 0.1*x_vector[1]*x_vector[0] -0.7
+    ]
+    nuthon = MethodNuthona(f_vector, x_vector)
+    xstart = [0.25, 0.75]
+    roots, k = nuthon.solve(xstart)

@@ -10,9 +10,10 @@ matrix = [
     [5,8,-1]
 ]
 matrix_complex_eigval = [
-    [1, 3, 1],
-    [1,1,4],
-    [4,3,1]
+    [1,0,0,0],
+    [0,1,3,1],
+    [0,1,1,4],
+    [0,4,3,1]
 ]
 filename = 'test_lab1.5.json'
 with open(filename,'r') as file:
