@@ -6,6 +6,7 @@ import  sympy
 
 
 class AdamsMethod(Method):
+    name = 'Adams Method'
     def __init__(self, step, section):
         Method.__init__(self, step, section)
 
@@ -42,6 +43,8 @@ class AdamsMethod(Method):
 
 
 class AdamsBashfortsMoultonMethod(Method):
+    name  = 'Adams Bashforts Moulton Method'
+
     def __init__(self, step, section):
         Method.__init__(self, step, section)
 

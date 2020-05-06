@@ -38,6 +38,7 @@ class Polynomial:
         if self.F == None:
             print('Note make')
         else:
+            print('F(x) = ')
             sympy.pprint(self.F)
     
     def __get_Ab(self):

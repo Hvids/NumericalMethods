@@ -27,7 +27,7 @@ class CubicSplatsn:
         C, b = self.__create_Cb()
         c_vec = [0] + solve_LUP(C,b)
         a_vec = self.f_vec[:-1]
-        b_vec  = [ (self.f_vec[i] - self.f_vec[i-1])/self.h_vec[i-1] -(self.h_vec[i-1]*(c_vec[i] + 2*c_vec[i-1]))/3 for i in range(1,self.size-1) ] + [ (self.f_vec[-1] - self.f_vec[-2])/self.h_vec[-1] - 2*(self.h_vec[-1]*c_vec[-1])/3 ]  
+        b_vec  = [ (self.f_vec[i] - self.f_vec[i-1])/self.h_vec[i-1] -(self.h_vec[i-1]*(c_vec[i] + 2*c_vec[i-1]))/3 for i in range(1,self.size) ] + [ (self.f_vec[-1] - self.f_vec[-2])/self.h_vec[-1] - 2*(self.h_vec[-1]*c_vec[-1])/3 ]
         d_vec = [ (c_vec[i+1]-c_vec[i])/(3*self.h_vec[i]) for i in range(self.size-1) ] + [-c_vec[-1]/(3*self.h_vec[-1])]
         
         self.cubic_splatsn = [ a + b*(self.x-xi)+c*(self.x-xi)**2 + d*(self.x-xi)**3 for i,xi,a,b,c,d, in zip(range(self.size),self.x_vec[:-1],a_vec,b_vec,c_vec,d_vec) ]
@@ -57,4 +57,17 @@ class CubicSplatsn:
         C.append(row)
         return C, b
 
-        
+if __name__ == '__main__':
+    # var 5
+    # x_vec = [1,1.9,2.8,3.7,4.6]
+    # f_vec = [2.4142,1.0818,0.50953,0.11836,-0.24008]
+    x_vec = [0.0, 1.0, 2.0, 3.0, 4.0]
+    f_vec = [0.0, 1.8415, 2.9093, 3.1411, 3.2432]
+    x_ = 1.5
+    cup_sp = CubicSplatsn(f_vec, x_vec)
+    for i, sp in enumerate(cup_sp.cubic_splatsn):
+        print(f'f{i} = ')
+        sympy.pprint(sp)
+
+    f_x_ = cup_sp.calc_point(x_)
+    print(f'\nf({x_}) = {f_x_}')

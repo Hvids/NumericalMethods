@@ -1,3 +1,6 @@
+import  sys
+sys.path.append('../Lab1/')
+from method_sweeps import  solve_sweeps_methods
 from condition import Condition, TYPE_A,TYPE_B
 from eulera_methods import  TableFucntion, Method
 import numpy as np
@@ -44,7 +47,7 @@ class FiniteDifferenceMethod(Method):
                 b.append(cond_b.rhs)
             matrix.append(row)
 
-        y_res = np.linalg.solve(matrix,b)
+        y_res = solve_sweeps_methods(matrix,b)
 
         table_func_dict = {x:x_vec,y:y_res}
 

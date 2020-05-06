@@ -79,7 +79,7 @@ class RungeKuttaMethod(Method):
         table_func_dict = {key: [sdata_dict[key]] for key in sdata_dict.keys()}
         key_func = func_dict.keys()
 
-        for i in np.arange(a, b, h):
+        for i in np.arange(a, b + h/10, h):
             #             dy
             delta_function = {key: 0 for key in func_dict}
             #             K
@@ -131,7 +131,7 @@ class RungeKuttaMethod(Method):
 
     def solve_for_shooting(self,func_dict, sdata_dict,ans_vars):
         table,_,_ = self.solve_for_adams(func_dict,sdata_dict)
-        res = {key:table[key][-1] for key in table.keys()}
+        res = {key:table[key][-2] for key in table.keys()}
         return res
 
 
