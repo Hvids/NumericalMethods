@@ -6,6 +6,7 @@ import  pandas as pd
 
 
 class RungeKuttaMethod(Method):
+    name = 'Runge Kutta Method'
     def solve(self, func_dict, sdata_dict, ans_vars):
         order_of_preciosion = 4
         h = self.step
@@ -130,11 +131,9 @@ class RungeKuttaMethod(Method):
 
     def solve_for_shooting(self,func_dict, sdata_dict,ans_vars):
         table,_,_ = self.solve_for_adams(func_dict,sdata_dict)
-        table = pd.DataFrame(table)
-        table = table[ans_vars]
-        return table
+        res = {key:table[key][-1] for key in table.keys()}
+        return res
 
-        return
 
 if __name__ == '__main__':
     x, y, z, n = sympy.symbols('x,y,z,n')
@@ -158,7 +157,7 @@ if __name__ == '__main__':
     parametrs_for_solve = {
         'func_dict': func,
         'sdata_dict': sdata,
-        'ans_vars': [x, y]
+        'ans_vars': (x, y)
     }
     method = RungeKuttaMethod(**parametrs_class_obj)
     t= method.solve_for_shooting(**parametrs_for_solve)

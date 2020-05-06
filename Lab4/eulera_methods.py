@@ -8,7 +8,7 @@ class Method:
     def __init__(self,step,section):
         self.step = step
         self.section = tuple(section)
-    staticmethod
+    @staticmethod
     def precision(real_func,table_func):
         """
         Точность входные данные реальное решение и таличная функиция -> TableFunction
@@ -23,18 +23,19 @@ class Method:
         return eps
     @staticmethod
     def precision_runberg(real_func, tablh, tablkh, k, p):
-        X1 = np.around(tablh.list_value_varibals, 5)
+        X1 = np.around(tablh.list_value_varibals.T[0], 5)
         X2 = np.around(tablkh.list_value_varibals.T[0], 5)
         Y1 = tablh.list_value_function.T[0]
         Y2 = tablkh.list_value_function.T[0]
+        Y1 = np.array( [yi for xi,yi in zip(X1,Y1) if xi in X2 ])
         Y2 = np.array( [yi for xi,yi in zip(X2,Y2) if xi in X1 ])
+        X1 = np.array( [xi for xi in X1 if xi in X2 ])
         F = Y1 + (Y2 - Y1) / (k ** p - 1)
 
-        Y2 = np.array([yi for xi, yi in zip(X2, Y2) if xi in X1])
 
-        F_real = np.array([real_func.subs(dict(zip(tablh.varibals, xi))) for xi in X1])
+        F_real = np.array([real_func.subs(dict(zip(tablh.varibals, [xi]))) for xi in X1])
 
-        return F, abs(F_real - F)
+        return F, X1,abs(F_real - F)
     
 class TableFucntion:
     """
@@ -98,6 +99,7 @@ class ExplicitEuleraMethod(Method):
         return table_func_dict
 
 class EuleraCauchyMethod(Method):
+    name = 'Eulera Cauchy Method'
 #     Эйлера Коши
     def solve(self, func_dict,sdata_dict, ans_vars):
         h = self.step
@@ -131,36 +133,38 @@ class EuleraCauchyMethod(Method):
         return table_func_dict
 
 class ImprovedEuleraMethod(Method):
-        def solve(self, func_dict,sdata_dict, ans_vars):
-            h = self.step
-            a, b = self.section
-            sdata_dict = deepcopy(sdata_dict)
-            table_func_dict = { key:[sdata_dict[key]] for key in ans_vars}
 
-            for i in np.arange(a,b,h):
-                ndata_dict = deepcopy(sdata_dict)
-                wave_dict = deepcopy(sdata_dict)
-                for key in sdata_dict.keys():
-                    if key in func_dict.keys():
-                        wave_dict[key] = sdata_dict[key] + h*func_dict[key].subs(sdata_dict)/2 
-                    else:
-                        wave_dict[key] += h/2
+    name = 'Improved Eulera Method'
+    def solve(self, func_dict,sdata_dict, ans_vars):
+        h = self.step
+        a, b = self.section
+        sdata_dict = deepcopy(sdata_dict)
+        table_func_dict = { key:[sdata_dict[key]] for key in ans_vars}
 
-                for key in sdata_dict.keys():
-                    if key in func_dict.keys():
-                        ndata_dict[key] = sdata_dict[key] + h*(func_dict[key].subs(wave_dict))
-                    else:
-                        ndata_dict[key] += h
+        for i in np.arange(a,b,h):
+            ndata_dict = deepcopy(sdata_dict)
+            wave_dict = deepcopy(sdata_dict)
+            for key in sdata_dict.keys():
+                if key in func_dict.keys():
+                    wave_dict[key] = sdata_dict[key] + h*func_dict[key].subs(sdata_dict)/2
+                else:
+                    wave_dict[key] += h/2
+
+            for key in sdata_dict.keys():
+                if key in func_dict.keys():
+                    ndata_dict[key] = sdata_dict[key] + h*(func_dict[key].subs(wave_dict))
+                else:
+                    ndata_dict[key] += h
 
 
-                sdata_dict = deepcopy(ndata_dict)
-                for key in ans_vars:
-                    table_func_dict[key].append(sdata_dict[key])
+            sdata_dict = deepcopy(ndata_dict)
+            for key in ans_vars:
+                table_func_dict[key].append(sdata_dict[key])
 
-            var_depend = list(set(ans_vars)&set(func_dict.keys()))
-            varibals = list(set(ans_vars) - set(var_depend))
-            table_func_dict = TableFucntion(table_func_dict,var_depend,varibals)
-            return table_func_dict
+        var_depend = list(set(ans_vars)&set(func_dict.keys()))
+        varibals = list(set(ans_vars) - set(var_depend))
+        table_func_dict = TableFucntion(table_func_dict,var_depend,varibals)
+        return table_func_dict
 
 if __name__ == "__main__":
     from test_data_lab4_1 import test
