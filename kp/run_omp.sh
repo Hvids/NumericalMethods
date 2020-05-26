@@ -2,7 +2,7 @@
 
 ## Compilation
 g++ gen.c -o gen
- g++ -fopenmp -o omp qr_omp.cc -lm
+g++ -fopenmp -o omp qr_omp.cc -lm
 
 ## Generating file with size of matrix 20 and save it in file named "input"
 ./gen 5 > input
