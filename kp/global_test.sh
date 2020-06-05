@@ -6,7 +6,7 @@ g++ ./qr_simple.cc -o simple
 ## Generating file with size of matrix 20 and save it in file named "input"
 
 
-for ((j = 2 ; j < 20 ; j++)); do
+for ((j = 7 ; j < 20 ; j++)); do
 
   rm ./global_test/test_omp_$j
   rm ./global_test/test_simple_$j
@@ -15,7 +15,7 @@ done
 
 
 
-for ((j = 2 ; j < 20 ; j++)); do
+for ((j = 7 ; j < 20 ; j++)); do
 
   for ((i = 5 ; i < 1000 ; i+=50)); do
     echo ___________________
